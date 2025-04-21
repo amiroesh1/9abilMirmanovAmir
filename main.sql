@@ -1,16 +1,12 @@
-
-
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY AUTO_INCREMENT,
-    customer_name VARCHAR(50) NOT NULL,
-    dish_name VARCHAR(50) NOT NULL,
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    amount DECIMAL(10,2) NOT NULL,
-    status ENUM('принят', 'готовится', 'готов', 'доставлен') DEFAULT 'принят'
+CREATE TABLE items (
+    ItemID INT AUTO_INCREMENT PRIMARY KEY,          
+    ItemName VARCHAR(100),                           
+    Category VARCHAR(50),                               
+    Price DECIMAL(10,2),                                 
+    Status ENUM('принят', 'готовится', 'готов', 'доставлен') 
 );
 
--- Вставляем 50 записей о заказах
-INSERT INTO orders (customer_name, dish_name, amount, status) VALUES
+INSERT INTO items (ItemName, Category, Price, Status) VALUES
 ('Иванов Иван', 'Пицца Маргарита', 550.00, 'доставлен'),
 ('Петрова Анна', 'Салат Цезарь', 320.00, 'готов'),
 ('Сидоров Дмитрий', 'Стейк Рибай', 1200.00, 'готовится'),
@@ -63,21 +59,12 @@ INSERT INTO orders (customer_name, dish_name, amount, status) VALUES
 ('Романова Диана', 'Суп Тыквенный', 290.00, 'доставлен');
 
 
-SELECT * FROM orders WHERE amount > 500;
+SELECT * FROM items;
 
-SELECT customer_name, dish_name, amount 
-FROM orders 
-WHERE status = 'доставлен';
+SELECT DISTINCT Category FROM items;
 
-SELECT customer_name, order_date, amount
-FROM orders
-WHERE dish_name LIKE '%Пицца%';
+SELECT ItemName, Price FROM items WHERE Price < 5.00;
 
-SELECT customer_name, dish_name, amount, status
-FROM orders
-WHERE order_date >= DATE_SUB(CURDATE(), INTERVAL 3 DAY);
+SELECT * FROM items WHERE Status = 'доставлен';
 
-SELECT customer_name, dish_name, amount
-FROM orders
-ORDER BY amount DESC
-LIMIT 5;
+SELECT * FROM items WHERE Status = 'готовится';
